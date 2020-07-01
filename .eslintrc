@@ -11,7 +11,8 @@
 		"object-curly-spacing": "off",
 		"indent": "off",
 		"no-tabs": "off",
-		"require-jsdoc": "off"
+		"require-jsdoc": "off",
+		"linebreak-style": "off"
 	},
 	"extends": [
 		"eslint:recommended",

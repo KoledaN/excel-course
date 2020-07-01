@@ -19,7 +19,7 @@ const jsLoaders = () => {
 	];
 
 	if (isDev) {
-		loaders.push('esling-loader');
+		loaders.push('eslint-loader');
 	}
 
 	return loaders;
