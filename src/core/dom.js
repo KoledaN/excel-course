@@ -26,6 +26,10 @@ class Dom {
 		this.$el.removeEventListener(eventType, callback);
 	}
 
+	find(selector) {
+		return $(this.$el.querySelector(selector));
+	}
+
 	append(node) {
 		if (node instanceof Dom) {
 			node = node.$el;
@@ -37,6 +41,10 @@ class Dom {
 		}
 
 		return this;
+	}
+
+	text(text) {
+		return this.$el.textContent = text;
 	}
 
 	get data() {
@@ -59,6 +67,30 @@ class Dom {
 		Object.keys(styles).forEach(key => {
 			this.$el.style[key] = styles[key];
 		});
+	}
+
+	id(parse) {
+		if (parse) {
+			const parse = this.id().split(':');
+			return {
+				row: +parse[0],
+				col: +parse[1]
+			};
+		}
+		return this.data.id;
+	}
+
+	focus() {
+		this.$el.focus();
+		return this;
+	}
+
+	addClass(className) {
+		this.$el.classList.add(className);
+	}
+
+	removeClass(className) {
+		this.$el.classList.remove(className);
 	}
 }
 
