@@ -1,6 +1,6 @@
 const CODES = {
-    A: 65,
-    Z: 90
+	A: 65,
+	Z: 90
 };
 
 // function toCell(row, index) {
@@ -14,8 +14,8 @@ const CODES = {
 // }
 
 function toCell(row) {
-    return function(_, index) {
-        return `
+	return function(_, index) {
+		return `
             <div class="cell"
             contenteditable
             data-cell="${index}"
@@ -23,11 +23,11 @@ function toCell(row) {
             data-type="cell"
             ></div>
        `;
-    };
+	};
 }
 
 function toColumn(col, index) {
-    return `
+	return `
         <div class="column" data-type="resizable" data-col="${index}">
             ${col}
             <div class="col-resize" data-resize="column"></div>
@@ -36,13 +36,13 @@ function toColumn(col, index) {
 }
 
 function createRow(index = '', content) {
-    const resize = index
-        ? '<div class="row-resize" data-resize="row"></div>'
-        : '';
-    const resizable = index
-        ? 'data-type="resizable"'
-        : '';
-    return `
+	const resize = index
+		? '<div class="row-resize" data-resize="row"></div>'
+		: '';
+	const resizable = index
+		? 'data-type="resizable"'
+		: '';
+	return `
         <div class="row" ${resizable}>
             <div class="row-info">
                 ${index ? index : ''}
@@ -54,28 +54,28 @@ function createRow(index = '', content) {
 }
 
 function toChar(_, index) {
-    return String.fromCharCode(CODES.A + index);
+	return String.fromCharCode(CODES.A + index);
 }
 
 export function createTable(rowsCount = 15) {
-    const colsCount = CODES.Z - CODES.A + 1;
-    const rows = [];
+	const colsCount = CODES.Z - CODES.A + 1;
+	const rows = [];
 
-    const cols = new Array(colsCount)
-        .fill('')
-        .map(toChar) // the same     map((el, index) => toChar(el, index)
-        .map(toColumn) // the same   map(el => toColumn(el))
-        .join('');
+	const cols = new Array(colsCount)
+		.fill('')
+		.map(toChar) // the same     map((el, index) => toChar(el, index)
+		.map(toColumn) // the same   map(el => toColumn(el))
+		.join('');
 
-    rows.push(createRow(null, cols));
+	rows.push(createRow(null, cols));
 
-    for (let row = 0; row < rowsCount; row++) {
-        const cells = new Array(colsCount)
-            .fill('')
-            // .map((_, index) => toCell(row, index))
-            .map(toCell(row))
-            .join('');
-        rows.push(createRow(row + 1, cells));
-    }
-    return rows.join('');
+	for (let row = 0; row < rowsCount; row++) {
+		const cells = new Array(colsCount)
+			.fill('')
+			// .map((_, index) => toCell(row, index))
+			.map(toCell(row))
+			.join('');
+		rows.push(createRow(row + 1, cells));
+	}
+	return rows.join('');
 }
