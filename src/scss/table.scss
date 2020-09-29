@@ -43,7 +43,8 @@
     background: #f8f9fa;
     border: 1px solid $border-color;
     border-top: 0;
-    border-left: 0;
+		border-left: 0;
+		user-select: none;
   }
 
   .cell {

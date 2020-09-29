@@ -7,6 +7,8 @@ export class Excel {
 		this.components = options.components || [];
 		this.store = options.store;
 		this.emitter = new Emitter();
+
+		// console.log(this.store, 'store excel');
 	}
 
 	getRoot() {
