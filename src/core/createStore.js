@@ -1,9 +1,11 @@
 export function createStore(rootReducer, initialState = {}) {
+	// state, action
 	let state = rootReducer({...initialState}, {type: '__INIT__'});
 	let listeners = [];
 	return {
 		subscribe(fn) {
 			listeners.push(fn);
+			// console.log(state, 'state');
 			return {
 				unsubscribe: () => {
 					listeners = listeners.filter(listener => listener !== fn);
