@@ -17,7 +17,7 @@ export function resizeHandler($root, event) {
     const coords = $parent.getCoords();
     const type = $resizer.data.resize;
     let value;
-    const prop = type === 'column' ? 'height' : 'width';
+    const prop = type === 'col' ? 'height' : 'width';
 
     $resizer.css({
 			opacity: 1,
@@ -26,7 +26,7 @@ export function resizeHandler($root, event) {
 
     document.onmousemove = e => {
 			e.preventDefault();
-			if (type === 'column') {
+			if (type === 'col') {
 				const delta = e.pageX - coords.right;
 				value = coords.width + delta;
 				$resizer.css({right: -delta + 'px'});
@@ -41,7 +41,7 @@ export function resizeHandler($root, event) {
 			e.preventDefault();
 			document.onmousemove = null;
 			document.onmouseup = null;
-			if (type === 'column') {
+			if (type === 'col') {
 				value = value >= MINPARAMS.width ? value : MINPARAMS.width;
 				$parent.css({width: value + 'px'});
 				$root.findAll(`[data-cell="${$parent.data.col}"`)
@@ -51,8 +51,9 @@ export function resizeHandler($root, event) {
 				$parent.css({height: value + 'px'});
 			}
 			resolve({
-				id: type === 'column' ? $parent.data.col : null,
-				value: value
+				id: $parent.data[type],
+				value: value,
+				type
 			});
 			$resizer.css({
 				opacity: '',

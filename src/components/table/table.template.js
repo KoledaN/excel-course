@@ -15,7 +15,7 @@ const CODES = {
 
 function toCell(row, colState) {
 	return function(_, index) {
-		const size = getWidth(colState, index);
+		const size = getParams(colState, index, 'width');
 		return `
 					<div class="cell"
             contenteditable
@@ -32,32 +32,36 @@ function toCell(row, colState) {
 // 	return `
 //         <div class="column" data-type="resizable" data-col="${index}">
 //             ${col}
-//             <div class="col-resize" data-resize="column"></div>
+//             <div class="col-resize" data-resize="col"></div>
 //         </div>
 //     `;
 // }
 
 function toColumn(colState) {
 	return function(col, index) {
-		const size = getWidth(colState, index);
+		const size = getParams(colState, index, 'width');
 		return `
 					<div class="column" ${size} data-type="resizable" data-col="${index}">
 							${col}
-							<div class="col-resize" data-resize="column"></div>
+							<div class="col-resize" data-resize="col"></div>
 					</div> 
 			`;
 	};
 }
 
-function createRow(index = '', content) {
+function createRow(index = '', content, rowState = {}) {
+	const size = getParams(rowState, index, 'height');
 	const resize = index
 		? '<div class="row-resize" data-resize="row"></div>'
 		: '';
 	const resizable = index
 		? 'data-type="resizable"'
 		: '';
+	const row = index
+		? `data-row="${index}"`
+		: '';
 	return `
-        <div class="row" ${resizable}>
+        <div class="row" ${resizable} ${row} ${size}>
             <div class="row-info">
                 ${index ? index : ''}
                 ${resize}
@@ -67,8 +71,8 @@ function createRow(index = '', content) {
     `;
 }
 
-function getWidth(colState, index) {
-		return colState[index] ? `style="width: ${colState[index]}px"` : '';
+function getParams(colState = {}, index, param) {
+		return colState[index] ? `style="${param}: ${colState[index]}px"` : '';
 }
 
 function toChar(_, index) {
@@ -76,7 +80,7 @@ function toChar(_, index) {
 }
 
 export function createTable(rowsCount = 15, state = {}) {
-	const {colState} = state;
+	const {colState, rowState} = state;
 
 	const colsCount = CODES.Z - CODES.A + 1;
 	const rows = [];
@@ -96,7 +100,7 @@ export function createTable(rowsCount = 15, state = {}) {
 			// .map((_, index) => toCell(row, index))
 			.map(toCell(row, colState))
 			.join('');
-		rows.push(createRow(row + 1, cells));
+		rows.push(createRow(row + 1, cells, rowState));
 	}
 	return rows.join('');
 }

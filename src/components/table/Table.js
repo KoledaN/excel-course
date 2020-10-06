@@ -54,7 +54,6 @@ export class Table extends ExcelComponent {
 		try {
 			const data = await resizeHandler(this.$root, event);
 			this.$dispatch(actions.tableResize(data)); // action
-			// console.log(data, 'colState');
 		} catch (e) {
 			console.warn(e, 'resize error');
 		}
