@@ -13,9 +13,11 @@ const CODES = {
 //     `;
 // }
 
-function toCell(row, colState) {
+function toCell(row, state) {
+	const {colState, dataState} = state;
 	return function(_, index) {
 		const size = getParams(colState, index, 'width');
+		const text = dataState[`${row}:${index}`] || '';
 		return `
 					<div class="cell"
             contenteditable
@@ -23,7 +25,7 @@ function toCell(row, colState) {
             data-id="${row}:${index}"
 						data-type="cell"
 						${size}
-					></div>
+					>${text}</div>
        `;
 	};
 }
@@ -80,7 +82,8 @@ function toChar(_, index) {
 }
 
 export function createTable(rowsCount = 15, state = {}) {
-	const {colState, rowState} = state;
+	const {colState, rowState, dataState} = state;
+	console.log(dataState, 'dataState');
 
 	const colsCount = CODES.Z - CODES.A + 1;
 	const rows = [];
@@ -98,7 +101,7 @@ export function createTable(rowsCount = 15, state = {}) {
 		const cells = new Array(colsCount)
 			.fill('')
 			// .map((_, index) => toCell(row, index))
-			.map(toCell(row, colState))
+			.map(toCell(row, state))
 			.join('');
 		rows.push(createRow(row + 1, cells, rowState));
 	}

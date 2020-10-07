@@ -33,6 +33,7 @@ export class Table extends ExcelComponent {
 
 		this.$on('formula:input', (data) => {
 			this.selection.current.text(data);
+			this.updateTextInStore(data);
 		});
 
 		this.$on('formula:done', () => {
@@ -48,6 +49,7 @@ export class Table extends ExcelComponent {
 		this.selection.select($cell);
 		this.$emit('table:select', $cell);
 		// this.$dispatch({type: 'TEST'});
+		this.updateTextInStore($cell.text());
 	}
 
 	async resizeTable(event) {
@@ -92,8 +94,16 @@ export class Table extends ExcelComponent {
 		}
 	}
 
+	updateTextInStore(value) {
+		this.$dispatch(actions.changeText({
+			id: this.selection.current.id(),
+			value
+		}));
+	}
+
 	onInput(event) {
-		this.$emit('table:input', $(event.target));
+		// this.$emit('table:input', $(event.target));
+		this.updateTextInStore($(event.target).text());
 	}
 }
 
