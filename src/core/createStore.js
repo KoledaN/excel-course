@@ -5,7 +5,6 @@ export function createStore(rootReducer, initialState = {}) {
 	return {
 		subscribe(fn) {
 			listeners.push(fn);
-			// console.log(state, 'state');
 			return {
 				unsubscribe: () => {
 					listeners = listeners.filter(listener => listener !== fn);
@@ -17,7 +16,7 @@ export function createStore(rootReducer, initialState = {}) {
 			listeners.forEach(listener => listener(state));
 		},
 		getState() {
-			return state;
+			return JSON.parse(JSON.stringify(state));
 		}
 	};
 }

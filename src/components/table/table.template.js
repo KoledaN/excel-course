@@ -82,8 +82,7 @@ function toChar(_, index) {
 }
 
 export function createTable(rowsCount = 15, state = {}) {
-	const {colState, rowState, dataState} = state;
-	console.log(dataState, 'dataState');
+	const {colState, rowState} = state;
 
 	const colsCount = CODES.Z - CODES.A + 1;
 	const rows = [];
