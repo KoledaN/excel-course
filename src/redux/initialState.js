@@ -2,7 +2,7 @@ import { storage } from '../core/utils';
 
 const defaultState = {
 	rowState: {},
-	colstate: {},
+	colState: {},
 	dataState: {},
 	currentText: '',
 };
