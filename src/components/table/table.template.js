@@ -1,3 +1,6 @@
+import { defaultStyles } from '../../constans';
+import { camelToDashCase } from '../../core/utils';
+
 const CODES = {
 	A: 65,
 	Z: 90
@@ -16,7 +19,10 @@ const CODES = {
 function toCell(row, state) {
 	const {colState, dataState} = state;
 	return function(_, index) {
-		const size = getParams(colState, index, 'width');
+		const styles = Object.keys(defaultStyles)
+			.map(key => `${camelToDashCase(key)}: ${defaultStyles[key]}`)
+			.join('; ');
+		const size = getParams(colState, index, 'width', styles);
 		const text = dataState[`${row}:${index}`] || '';
 		return `
 					<div class="cell"
@@ -73,8 +79,10 @@ function createRow(index = '', content, rowState = {}) {
     `;
 }
 
-function getParams(colState = {}, index, param) {
-		return colState[index] ? `style="${param}: ${colState[index]}px"` : '';
+function getParams(colState = {}, index, param, styles = '') {
+		return colState[index]
+		?	`style="${param}: ${colState[index]}px; ${styles}"`
+		: `style="${styles}"`;
 }
 
 function toChar(_, index) {
