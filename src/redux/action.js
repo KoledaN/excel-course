@@ -1,4 +1,9 @@
-const { TABLE_RESIZE, CHANGE_TEXT, CHANGE_STYLES } = require('./types');
+const {
+	TABLE_RESIZE,
+	CHANGE_TEXT,
+	CHANGE_STYLES,
+	APPLY_STYLE
+} = require('./types');
 
 // Action Creator
 export function tableResize(data) {
@@ -18,6 +23,13 @@ export function changeText(data) {
 export function changeStyles(data) {
 	return {
 		type: CHANGE_STYLES,
+		data
+	};
+}
+
+export function applyStyle(data) {
+	return {
+		type: APPLY_STYLE,
 		data
 	};
 }

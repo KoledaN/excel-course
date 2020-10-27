@@ -1,5 +1,5 @@
 export const defaultStyles = {
-	textAlign: 'initial',
+	textAlign: 'left',
 	fontWeight: 'normal',
 	textDecoration: 'none',
 	fontStyle: 'normal'
