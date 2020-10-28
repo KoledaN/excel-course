@@ -1,6 +1,7 @@
 import {ExcelComponent} from '@core/ExcelComponent';
 import { defaultTitle } from '../../constans';
 import { $ } from '../../core/dom';
+import { debounce } from '../../core/utils';
 import * as actions from '../../redux/action';
 
 export class Header extends ExcelComponent {
@@ -12,6 +13,10 @@ export class Header extends ExcelComponent {
 			listeners: ['input'],
 			...options
 		});
+	}
+
+	prepare() {
+		this.onInput = debounce(this.onInput, 300);
 	}
 
 	toHTML() {
