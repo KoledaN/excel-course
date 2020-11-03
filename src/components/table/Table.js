@@ -6,6 +6,7 @@ import { isCell, matrix, nextSelector, shouldResize } from './table.functions';
 import { TableSelection } from '@/components/table/TableSelection';
 import * as actions from '../../redux/action';
 import { defaultStyles } from '../../constans';
+import { parse } from '../../core/parse';
 
 export class Table extends ExcelComponent {
 	static className = 'excel__table';
@@ -33,7 +34,9 @@ export class Table extends ExcelComponent {
 		this.selectCell($cell);
 
 		this.$on('formula:input', (data) => {
-			this.selection.current.text(data);
+			this.selection.current
+				.attr('data-value', data)
+				.text(parse(data));
 			this.updateTextInStore(data);
 		});
 
@@ -53,7 +56,7 @@ export class Table extends ExcelComponent {
 	selectCell($cell) {
 		this.selection.select($cell);
 		this.$emit('table:select', $cell);
-		this.updateTextInStore($cell.text());
+		this.updateTextInStore($cell.data.value);
 		const styles = $cell.getStyles(Object.keys(defaultStyles));
 		// const styles = {
 		// 	...defaultStyles,
@@ -113,7 +116,12 @@ export class Table extends ExcelComponent {
 
 	onInput(event) {
 		// this.$emit('table:input', $(event.target));
-		this.updateTextInStore($(event.target).text());
+		const value = $(event.target).text() || '';
+		$(event.target).attr('data-value', value);
+		this.updateTextInStore($(event.target).data.value);
+		event.target.onblur = (e) => {
+			$(event.target).text(parse($(event.target).text()));
+		};
 	}
 }
 
