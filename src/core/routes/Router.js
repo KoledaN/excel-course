@@ -21,7 +21,12 @@ export class Router {
 
 	changePageHandler(event) {
 		console.log(ActiveRoute.path, ActiveRoute.param);
-		this.$placeholder.html(`<h1>${ActiveRoute.path}</h1>`);
+		const Page = this.routes.excel;
+		const page = new Page();
+		console.log(page.getRoot());
+
+		this.$placeholder.append(page.getRoot());
+		page.afterRender();
 	}
 
 	destroy() {
