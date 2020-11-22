@@ -11,6 +11,7 @@ import {Table} from '@/components/table/Table';
 
 export class ExcelPage extends Page {
     getRoot() {
+        console.log(this.params, 'params');
         // rootReducer, initialState
         const store = createStore(rootReducer, initialState);
 
